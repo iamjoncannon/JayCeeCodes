@@ -1,0 +1,42 @@
+body {
+
+	background: black;
+}
+
+.button{
+	position: fixed;
+	z-index: 2;
+	color: white; 
+	font: Sans Serif; 
+	font-size: 50px
+
+}
+
+.up {
+	left: 100px; 
+	top: 30px;
+}
+
+.up:hover {
+	top: 20px;
+	left: 90px;
+	color: red;
+	font-size: 80px;
+}
+
+.down {
+	left: 100px; 
+	top: 30px;
+}
+
+.down:hover {
+	top: 20px;
+	left: 20px;
+	color: red;
+	font-size: 80px;
+}
+
+.display {
+	left: 200px;
+	top: 30px;
+}

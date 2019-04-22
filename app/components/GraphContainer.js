@@ -17,8 +17,10 @@ export default class GraphContainer extends React.Component {
   render() {
 
     return (
-      <div>
-        <Graph screen={calculateScreen()}/>
+      <div >
+        <div >
+          <Graph screen={calculateScreen()}/>
+        </div>
       </div>
     );
   }
