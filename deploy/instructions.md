@@ -36,7 +36,9 @@ template data is listed at the bottom.
 you can get the public IP after it launch by calling:
 
 ```bash
+
 aws ec2 describe-instances --instance-id i-0aaa3b2a2549e9233
+
 ```
 
 
