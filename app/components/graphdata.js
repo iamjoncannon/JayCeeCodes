@@ -16,6 +16,7 @@ let soundcloud = {id: 'soundcloud', label: 'soundcloud', img: 'soundcloud-icon.p
 let bandCamp = {id: 'bandCamp', label: 'bandCamp', img: 'globallyLTD.jpg', size: 15, addy: 'https://gltd.bandcamp.com/album/ep-1', display: "Buy my Tunes"}
 
 
+
 // projects 
 let ThisNode = { id: 'this', color: 'black', label: 'thisSite', text: 'this', size: 2 * ratio, display: "This Site"}
 let genieNode = {id: 'genie', label: 'genie', img: 'lamp.png', size: 20, display: "Redux Genie NPM package"}
