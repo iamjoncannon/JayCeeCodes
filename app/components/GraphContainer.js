@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react'
 import Graph from './Graph'
 
 export default class GraphContainer extends React.Component {
@@ -6,12 +6,18 @@ export default class GraphContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      size: calculateScreen()
     }
   }
 
-  componentDidMount(){
+  resize = () => {
+    this.setState({
+      size: calculateScreen()
+    })
+  }
 
+  componentDidMount(){
+    window.addEventListener("resize", ()=> {this.resize()});
   }
 
   render() {
@@ -19,7 +25,7 @@ export default class GraphContainer extends React.Component {
     return (
       <div >
         <div >
-          <Graph screen={calculateScreen()}/>
+          <Graph screen={this.state.size}/>
         </div>
       </div>
     );

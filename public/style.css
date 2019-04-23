@@ -1,42 +1,53 @@
 body {
-
 	background: black;
+	font: 'Sans Serif';
 }
 
-.button{
+/*display */
+
+.display {
+	position: fixed; 
+	z-index: 2;
+	color: black;
+	font: Sans Serif;
+	font-size: 5em;
+	background: white;
+	cursor: default;
+}
+
+/*back button*/
+
+.back {
 	position: fixed;
 	z-index: 2;
 	color: white; 
 	font: Sans Serif; 
-	font-size: 50px
-
+	top: 10vh;
+	height: 20vh; 
+	cursor: default;
 }
 
-.up {
-	left: 100px; 
-	top: 30px;
+.back:hover {
+
+	/*filter: blur(20px);*/
+	filter: drop-shadow(1px 1px 1px black) invert(50%);
 }
 
-.up:hover {
-	top: 20px;
-	left: 90px;
-	color: red;
-	font-size: 80px;
+.backContainer{
+
+	background: white;
 }
 
-.down {
-	left: 100px; 
-	top: 30px;
+.hide {
+	visibility: hidden;
 }
 
-.down:hover {
-	top: 20px;
-	left: 20px;
-	color: red;
-	font-size: 80px;
-}
 
-.display {
-	left: 200px;
-	top: 30px;
+
+
+@media (min-height: 700px){
+
+  #submit-left-button{
+    height: 150px;
+  }
 }

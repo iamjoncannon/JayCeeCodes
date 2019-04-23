@@ -10,18 +10,18 @@ export default class Graph extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      currentZoom: 0,
       graphData : graphData,
+      history: [],
       scene: 'back',
-      focus: {  x: -11.712163369028769, y: -23.893619849278366, z: 12.44009596667416 },
-      click: {text: 'back'}
+      highlighted: null,
+      display: 'joncannon.codes'
     }
   }
 
   componentDidMount(){
 
     let type = this.props.screen[0]
-    let factor = type === 'mobile' ? 10 : 19 ;
+    let factor = type === 'mobile' ? 8 : 16  ;
     type === 'desktop' && this.props.screen[1] < 1000 ? factor = 6 : '' ;
     // factor = 10
     
@@ -32,15 +32,32 @@ export default class Graph extends React.Component {
     );
 
     let newZoom = window.innerWidth / factor
+
     this.setState({
-      currentZoom: newZoom
+      factor: factor
     })
   }
 
   _handleClick = (node) => {
 
+    if(node.DL){
+
+        let link = document.createElement("a");
+        link.download = node.DL;
+        link.href = node.DL;
+        link.preventDefault = true
+        console.log(link)
+        document.body.appendChild(link);
+        link.click().preventDefault();
+        document.body.removeChild(link);
+        // delete link;
+
+
+    }
+
     if(node.addy){
-      window.location = node.addy
+      // window.location = node.addy
+      window.open(node.addy, '_blank')
 
       return
     }
@@ -48,12 +65,14 @@ export default class Graph extends React.Component {
     else if(node.text && node.text !== 'Jon Cannon'){
 
       this.setState({
+        history : [...this.state.history, this.state.scene],
         scene : node.text
       })
     }
     else if(node.label){
 
       this.setState({
+        history : [...this.state.history, this.state.scene],
         scene : node.label
       })
     }
@@ -89,23 +108,20 @@ export default class Graph extends React.Component {
   }
 
   _handleHover = (node) => {
-    console.log('hitting cb')
 
     if(!node && !this.state.highlighted){
 
-      console.log('FIRST !node and !this.state.highlighted')
-      this.setState({highlighted : null})
+      this.setState({highlighted : null, display: 'joncannon.codes'})
     }
     else if(!node && this.state.highlighted){
     // null and something is highlighted
-      console.log('SECOND !node and this state highlighted')
-      this.setState({highlighted : null})
+      this.setState({highlighted : null, display: 'joncannon.codes'})
     }
     else if(node && node.id !== this.state.highlighted){
 
       if(this.props.screen[0] === 'desktop'){
 
-        this.setState({highlighted : node.id })
+        this.setState({highlighted : node.id, display: node.display })
       }
       else if(this.props.screen[0] === 'mobile'){
         // hover equals click on mobile
@@ -116,34 +132,47 @@ export default class Graph extends React.Component {
     }
   }
 
-  render(){
+  _handleBack = () => {
+    let { history, scene } = this.state
 
+    let newHistory = history.slice(0, -1)
+    let last = history[history.length -1]
+
+    this.setState({
+      history: newHistory,
+      scene: last
+    })
+  }
+
+  render(){
+    console.log(this.state.history, this.state.scene)
     let {screen } = this.props
     let screenType = screen[0]
-    let width = screen[1]
-    let height = screen[2]
     let {graphData} = this.state
     let { scene } = this.state 
-    let data = (scene === 'back' || scene === 'back') && screenType === 'desktop' ? graphData.DeskOpening : graphData.mobileOpening ;
-    scene === 'Code' ? data = graphData.Code : '' ;
-    // scene === 'Projects' ? data = graphData.Project '' ;
-
+    let viewData = graphData[`${scene}`]
+    scene === 'back'  && screenType === 'desktop' ? viewData = graphData.DeskOpening : 
+    scene === 'back'  && screenType === 'mobile' ? viewData = graphData.mobileOpening : '' ;
+    !viewData ? viewData = graphData.me : '' ;
 
     return (
 
-        // <span style={{position: 'fixed', left: '100px', zIndex: 2, color: 'white', font: 'Sans Serif', fontSize: '50px'}}> Back </span> 
       <div>
-      
-      
-        <span className={"up button"} onClick={()=>this.zoom(this.state.currentZoom + 10)}> UP </span>
-        <span className={"display button"} style={{left : "200 px"}}> {this.state.currentZoom} </span>
+        <div className={'backContainer'}>
+          <img className={ scene !== 'back' ? "back" : "back hide" } src='/imgs/back.png' onClick={ this._handleBack } />
+        </div>
+
+        {/* <span style={{position: 'fixed', left: '100px', top: '20vh', zIndex: 2, color: 'red', font: 'Sans Serif', fontSize: '40px'}}> { this.state.display } </span> */} 
+        
+        <span className={"display"}> {this.state.display} </span>
+
         <div style={{ zIndex: 1 }}>
         <ForceGraph3D
-          height={height}
-          width={width}
+          height={screen[2]}
+          width={screen[1]}
           ref={el => { this.fg = el; }}
           // backgroundColor={'#ffffff'}
-            graphData={ data }
+            graphData={ viewData }
           // linkColor={() => 'rgba( 0, 0, 0, 1)'}
             linkWidth={2}
             linkMaterial={'RawShaderMaterial'}
@@ -151,7 +180,7 @@ export default class Graph extends React.Component {
 
               if(node.img){
                 let size = node.size
-                node.id === this.state.highlighted ? size += 6 : '' ;
+                node.id === this.state.highlighted ? size += 8 : '' ;
                 const imgTexture = new THREE.TextureLoader().load(`./imgs/${node.img}`);
                 const material = new THREE.SpriteMaterial({ map: imgTexture });
                 const sprite = new THREE.Sprite(material);
