@@ -21,11 +21,19 @@ export default class Graph extends React.Component {
   resize(){
 
     let type = this.props.screen[0]
-    let factor = type === 'mobile' ? 2 : 16  ;
-    type === 'desktop' && this.props.screen[1] < 1000 ? factor = 6 : '' ;
-    
-    console.log('this props size ', this.props.screen, 'factor ', factor)
+    let screensize = this.props.screen[1]
+    let factor
 
+    screensize > 1500 ? factor = 18 :
+    screensize > 1200 ? factor = 15 : 
+    screensize > 1000 ? factor = 10 :
+    screensize > 925 ? factor = 8 : 
+    screensize > 780 ? factor = 7 : 
+    screensize < 780 ? factor = 6 : 
+    screensize < 500 ? factor = 2 : '' ;
+
+    type === 'mobile' ? factor = 3 : '' ; 
+     
     this.fg.cameraPosition(
       { z:  window.innerWidth / factor  }, // new position
       null,

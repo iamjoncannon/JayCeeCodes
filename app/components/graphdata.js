@@ -1,3 +1,5 @@
+// will migrate this to Mongo
+
 let ratio = 4
 
 let CodeNode = { id: 'Code', label: 'Code', img: 'code.png', size: 20, display: 'Code'}
