@@ -107,7 +107,7 @@ const GenieTech = {
 let conceptText = { id: 'conceptText', color: 'black', label: "concept", text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph"}
 let conceptGH = {id: 'conceptGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/iamjoncannon/concept_parser', display: 'Source'}
 let conceptTech = { id: 'conceptTech', color: 'black', label: "ConceptTech", text: 'Technologies', size: 1 * ratio, display: "Technologies Used"}
-let conceptSite = { id: 'conceptSite', color: 'black', text: 'Deployed Site', size: 1 * ratio, display: "http://www.concept.joncannon.codes", addy: "http://www.concept.joncannon.codes"}
+let conceptSite = { id: 'conceptSite', color: 'black', text: 'Deployed Site', size: 1 * ratio, display: "http://www.concept.joncannon.codes", addy: "http://concept.joncannon.codes"}
 let presentation = { id: 'present', color: 'black', img: 'presentation.png', size: 5 * ratio, display: "Presentation", addy: "https://www.youtube.com/watch?v=sPflAhvZgrU&feature=youtu.be"}
 
 const concept = {
