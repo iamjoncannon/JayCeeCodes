@@ -18,13 +18,14 @@ export default class Graph extends React.Component {
     }
   }
 
-  componentDidMount(){
+  resize(){
 
     let type = this.props.screen[0]
-    let factor = type === 'mobile' ? 8 : 16  ;
+    let factor = type === 'mobile' ? 2 : 16  ;
     type === 'desktop' && this.props.screen[1] < 1000 ? factor = 6 : '' ;
-    // factor = 10
     
+    console.log('this props size ', this.props.screen, 'factor ', factor)
+
     this.fg.cameraPosition(
       { z:  window.innerWidth / factor  }, // new position
       null,
@@ -33,9 +34,23 @@ export default class Graph extends React.Component {
 
     let newZoom = window.innerWidth / factor
 
-    this.setState({
-      factor: factor
-    })
+    if(factor !== this.state.factor){
+
+      this.setState({
+        factor: factor
+      })
+    }
+
+  }
+
+  componentDidMount(){
+    
+    this.resize()
+  }
+
+  componentWillUpdate(){
+    
+    this.resize()
   }
 
   _handleClick = (node) => {
@@ -50,72 +65,46 @@ export default class Graph extends React.Component {
         document.body.appendChild(link);
         link.click().preventDefault();
         document.body.removeChild(link);
-        // delete link;
-
 
     }
 
     if(node.addy){
-      // window.location = node.addy
+
       window.open(node.addy, '_blank')
 
       return
     }
+    else if(node.label && node.label !== this.state.scene){
 
-    else if(node.text && node.text !== 'Jon Cannon'){
+      this.setState({
+        history : [...this.state.history, this.state.scene],
+        scene : node.label
+      })
+      return
+    }
+
+    else if(node.text && node.label !== this.state.scene){
 
       this.setState({
         history : [...this.state.history, this.state.scene],
         scene : node.text
       })
     }
-    else if(node.label){
-
-      this.setState({
-        history : [...this.state.history, this.state.scene],
-        scene : node.label
-      })
-    }
-
-    // if(node.text === 'Code') this.zoom(200)
-    // if(node.text === 'back') this.zoom(this.state.factor)
-
-  }
-
-  zoom = (zoomOut) => {
-
-    this.fg.cameraPosition(
-      { z:  zoomOut  }, // new position
-      null,
-      30  // ms transition duration
-    );
-
-    this.setState({
-      currentZoom: zoomOut
-    })
-  }
-
-   setCamera = (node) => {
-
-    const {x, y , z} = node
-
-    this.fg.cameraPosition(
-      { x : x, y : y, z : z  }, // new position
-      null,
-      10  // ms transition duration
-    );
-
   }
 
   _handleHover = (node) => {
 
     if(!node && !this.state.highlighted){
 
-      this.setState({highlighted : null, display: 'joncannon.codes'})
+      let nextState = this.state.scene === 'back' ? {highlighted : null, display: 'joncannon.codes'} : {highlighted : null, display: null}
+
+      this.setState(nextState)
     }
     else if(!node && this.state.highlighted){
     // null and something is highlighted
-      this.setState({highlighted : null, display: 'joncannon.codes'})
+      let nextState = this.state.scene === 'back' ? {highlighted : null, display: 'joncannon.codes'} : {highlighted : null, display: null}
+
+      this.setState(nextState)
     }
     else if(node && node.id !== this.state.highlighted){
 
@@ -123,16 +112,18 @@ export default class Graph extends React.Component {
 
         this.setState({highlighted : node.id, display: node.display })
       }
-      else if(this.props.screen[0] === 'mobile'){
+      else if(node && this.props.screen[0] === 'mobile'){
         // hover equals click on mobile
         
-        this.setState({highlighted : node.id }) 
+        this.setState({mobileDisplay : node.display })
+        this._handleClick(node) 
 
       }
     }
   }
 
   _handleBack = () => {
+
     let { history, scene } = this.state
 
     let newHistory = history.slice(0, -1)
@@ -145,7 +136,7 @@ export default class Graph extends React.Component {
   }
 
   render(){
-    console.log(this.state.history, this.state.scene)
+
     let {screen } = this.props
     let screenType = screen[0]
     let {graphData} = this.state
@@ -158,14 +149,8 @@ export default class Graph extends React.Component {
     return (
 
       <div>
-        <div className={'backContainer'}>
-          <img className={ scene !== 'back' ? "back" : "back hide" } src='/imgs/back.png' onClick={ this._handleBack } />
-        </div>
-
-        {/* <span style={{position: 'fixed', left: '100px', top: '20vh', zIndex: 2, color: 'red', font: 'Sans Serif', fontSize: '40px'}}> { this.state.display } </span> */} 
-        
-        <span className={"display"}> {this.state.display} </span>
-
+        <img className={ scene !== 'back' && screenType === 'desktop' ? "back" : "back hide" } src='/imgs/back.png' onClick={ this._handleBack } />
+        <span className={"display"}> {screenType === 'mobile' ? "joncannon.codes" : this.state.display } </span>
         <div style={{ zIndex: 1 }}>
         <ForceGraph3D
           height={screen[2]}

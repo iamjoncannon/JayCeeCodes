@@ -10,7 +10,7 @@ body {
 	z-index: 2;
 	color: black;
 	font: Sans Serif;
-	font-size: 5em;
+	
 	background: white;
 	cursor: default;
 }
@@ -22,15 +22,8 @@ body {
 	z-index: 2;
 	color: white; 
 	font: Sans Serif; 
-	top: 10vh;
-	height: 20vh; 
+	top: 0vh;
 	cursor: default;
-}
-
-.back:hover {
-
-	/*filter: blur(20px);*/
-	filter: drop-shadow(1px 1px 1px black) invert(50%);
 }
 
 .backContainer{
@@ -42,12 +35,28 @@ body {
 	visibility: hidden;
 }
 
+@media (max-width: 700px){
 
+	.display {
+		font-size: 3em;
+	}
 
+	.back {
+		height: 25vh;
+	}
+}
 
-@media (min-height: 700px){
+@media (min-width: 701px){
 
-  #submit-left-button{
-    height: 150px;
-  }
+	.display {
+		font-size: 5em;
+	}
+
+	.back {
+		height: 20vh;
+	}
+	.back:hover {
+		filter: drop-shadow(1px 1px 1px black) invert(50%);
+	}
+
 }

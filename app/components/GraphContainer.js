@@ -11,6 +11,8 @@ export default class GraphContainer extends React.Component {
   }
 
   resize = () => {
+
+    console.log(calculateScreen())
     this.setState({
       size: calculateScreen()
     })
@@ -18,6 +20,10 @@ export default class GraphContainer extends React.Component {
 
   componentDidMount(){
     window.addEventListener("resize", ()=> {this.resize()});
+  }
+
+  componentWillUnmount() {
+    // window.removeEventListener("resize");
   }
 
   render() {
@@ -34,9 +40,9 @@ export default class GraphContainer extends React.Component {
 
 function calculateScreen(){
 
-  let {outerWidth, innerWidth, outerHeight, innerHeight } = window
+  let { outerWidth, innerWidth, outerHeight, innerHeight } = window
   
-  if(outerWidth !== innerWidth) return ['mobile', innerWidth, innerHeight ]
+  if(outerWidth < 700 ) return ['mobile', outerWidth, innerHeight ]
 
   return ['desktop', outerWidth, innerHeight ]
 

@@ -15,15 +15,9 @@ let bandCamp = {id: 'bandCamp', label: 'bandCamp', img: 'globallyLTD.jpg', size:
 
 
 // projects 
-let ThisNode = { id: 'this', color: 'black', text: 'this', size: 2 * ratio, display: "This Site"}
+let ThisNode = { id: 'this', color: 'black', label: 'thisSite', text: 'this', size: 2 * ratio, display: "This Site"}
 let genieNode = {id: 'genie', label: 'genie', img: 'lamp.png', size: 20, display: "Redux Genie NPM package"}
 let conceptNode = { id: 'concept', label: 'concept', img: 'hegel.jpg', size: 4 * ratio, display: "Concept Graph Project"}
-
-// redux genie
-let genieText = { id: 'genietext', color: 'black', text: 'Redux Genie', size: 1 * ratio, addy: 'https://www.npmjs.com/package/redux-genie', display: "Redux CLI dev tool"}
-let genieGH  = {id: 'genieGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/lovely-libras/redux-genie', display: "Source"}
-let genieSite = {id: 'genieSite', color: 'black', text: 'Docs', size: 1 * ratio, addy: 'http://redux-genie.net/docs', display: "Read the Docs"}
-let genieNPM = {id: 'genieNPM', img: 'npm-logo.png', size: 4 * ratio, addy: 'https://www.npmjs.com/package/redux-genie', display: "npm i -g redux-genie"}
 
 
 
@@ -72,33 +66,89 @@ const Projects = {
 			{source: 'this', target: 'Projects'}]
 }
 
+// redux genie
+let genieText = { id: 'genietext', color: 'black', text: 'Redux Genie', size: 1.3 * ratio, addy: 'https://www.npmjs.com/package/redux-genie', display: "Redux CLI dev tool"}
+let genieGH  = {id: 'genieGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/lovely-libras/redux-genie', display: "Source"}
+let genieSite = {id: 'genieSite', color: 'black', text: 'Docs', size: 1.3 * ratio, addy: 'http://redux-genie.net/docs', display: "Read the Docs"}
+let genieNPM = {id: 'genieNPM', img: 'npm-logo.png', size: 4 * ratio, addy: 'https://www.npmjs.com/package/redux-genie', display: "npm i -g redux-genie"}
+let genieTech = {id: 'GenieTech', color: 'black', label: "GenieTech", text: "Technologies", size: 1.3 * ratio, display: "Technologies Used"}
 
 
 const genie = {
-	nodes: [genieNode, genieText, genieSite, genieGH, genieNPM],
+	nodes: [genieNode, genieText, genieSite, genieGH, genieNPM, genieTech],
 	links: [{source: 'genie', target: 'genietext'},
 			{source: 'genie', target: 'genieSite'},
 			{source: 'genie', target: 'genieGH'},
-			{source: 'genieNPM', target: 'genie'}]
+			{source: 'genieNPM', target: 'genie'},
+			{source: 'GenieTech', target: 'genie'}]
 
+}
+
+// NPM, NodeJS, Bash, Redux, Mocha/Chai
+
+let NodeJS = {id: 'nodeJS', img: 'node.jpg', size: 4 * ratio, display: "NodeJS"}
+let Bash = {id: 'Bash', img: 'bash.svg', size: 4 * ratio, display: "Bash scripting"}
+let Redux = {id: 'Redux', img: 'redux.png', size: 4 * ratio, display: "Redux"}
+let Mocha = {id: 'Mocha', img: 'mocha.svg', size: 4 * ratio, display: "Mocha/Chai TDD" }
+// let Chai = {id: 'Mocha', img: 'mocha.svg', size: 4 * ratio }
+
+const GenieTech = {
+	nodes: [genieNode, genieNPM, NodeJS, Bash, Redux, Mocha],
+	links: [{source: 'genie', target: 'nodeJS'},
+			{source: 'genie', target: 'Bash'},
+			{source: 'genie', target: 'Redux'},
+			{source: 'genieNPM', target: 'genie'},
+			{source: 'Mocha', target: 'genie'}]
 }
 
 // concept
-let conceptText = { id: 'conceptText', color: 'black', text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph"}
+let conceptText = { id: 'conceptText', color: 'black', label: "concept", text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph"}
 let conceptGH = {id: 'conceptGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/iamjoncannon/concept_parser', display: 'Source'}
-let conceptTech = { id: 'conceptTech', color: 'black', text: 'Tech', size: 1 * ratio, display: "Technologies Used"}
+let conceptTech = { id: 'conceptTech', color: 'black', label: "ConceptTech", text: 'Technologies', size: 1 * ratio, display: "Technologies Used"}
 let conceptSite = { id: 'conceptSite', color: 'black', text: 'Deployed Site', size: 1 * ratio, display: "http://www.concept.joncannon.codes", addy: "http://www.concept.joncannon.codes"}
+let presentation = { id: 'present', color: 'black', img: 'presentation.png', size: 5 * ratio, display: "Presentation", addy: "https://www.youtube.com/watch?v=sPflAhvZgrU&feature=youtu.be"}
 
 const concept = {
-	nodes: [conceptText, conceptGH, conceptTech, conceptSite, conceptNode], 
+	nodes: [conceptText, conceptGH, conceptTech, conceptSite, conceptNode, presentation], 
 	links: [{source: 'concept', target: 'conceptGH'},
 			{source: 'concept', target: 'conceptTech'},
 			{source: 'concept', target: 'conceptSite'},
-			{source: 'concept', target: 'conceptText'}
+			{source: 'concept', target: 'conceptText'},
+			{source: 'concept', target: 'present'}
 			]
 }
 
+// NodeJS, Express, PostGres, Amazon, D3, pm2
 
+let express = {id: 'express', img: 'express.png', size: 4 * ratio, display: "Express JS" }
+let postgres = {id: 'postgres', img: 'postgres.png', size: 4 * ratio, display: "PostgreSQL" }
+let amazon = {id: 'amazon', img: 'aws.png', size: 4 * ratio, display: "AWS EC2" }
+let D3 = {id: 'D3', img: 'D3.png', size: 4 * ratio, display: "D3" }
+let pm2 = {id: 'pm2', img: 'pm2-logo.png', size: 4 * ratio, display: "pm2" }
+let react = {id: 'react', img: 'react.png', size: 5 * ratio, display: "React" }
+
+const ConceptTech = {
+	nodes: [conceptNode, NodeJS, express, postgres, amazon, D3, pm2, react],
+	links: [{source: 'concept', target: 'nodeJS'},
+			{source: 'concept', target: 'express'},
+			{source: 'concept', target: 'postgres'},
+			{source: 'concept', target: 'amazon'},
+			{source: 'concept', target: 'D3'},
+			{source: 'concept', target: 'pm2'},
+			{source: 'concept', target: 'react'}
+		]
+}
+
+const thisSite = {
+	nodes: [ThisNode, NodeJS, express, amazon, D3, pm2, react],
+	links: [{source: 'this', target: 'nodeJS'},
+			{source: 'this', target: 'express'},
+			{source: 'this', target: 'amazon'},
+			{source: 'this', target: 'D3'},
+			{source: 'this', target: 'pm2'},
+			{source: 'this', target: 'react'}
+		]
+}
 
 const mobileOpening = {
   nodes: [ CodeNode, 
@@ -111,7 +161,6 @@ const mobileOpening = {
   		   ]
 }
 
-
 export default {
 	DeskOpening,
 	mobileOpening,
@@ -120,5 +169,8 @@ export default {
 	Music,
 	Projects,
 	genie,
-	concept
+	concept,
+	GenieTech,
+	ConceptTech, 
+	thisSite
 }
