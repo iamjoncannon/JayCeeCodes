@@ -19,7 +19,7 @@ export default class Graph extends React.Component {
     this.state = {
       
       graphData : graphData,
-      history: [],
+      history: ['joncannon.codes'],
       scene: 'back',
       highlighted: null,
       display: 'joncannon.codes'
@@ -93,7 +93,7 @@ export default class Graph extends React.Component {
     else if(node.label && node.label !== this.state.scene){
 
       this.setState({
-        history : [...this.state.history, this.state.scene],
+        history : [...this.state.history, node.label],
         scene : node.label
       })
       return
@@ -102,7 +102,7 @@ export default class Graph extends React.Component {
     else if(node.text && node.label !== this.state.scene){
 
       this.setState({
-        history : [...this.state.history, this.state.scene],
+        history : [...this.state.history, node.text],
         scene : node.text
       })
     }
@@ -110,13 +110,22 @@ export default class Graph extends React.Component {
 
   _handleHistory = (clicked) => {
 
+    if(clicked === 'joncannon.codes'){
+      this.setState({
+        history: ['joncannon.codes'],
+        scene: 'back'
+      })
+
+      return
+    }
+
     let { history, scene } = this.state
 
     let newHistory = history.slice(0, history.indexOf(clicked))
     let selected = history[history.length -1]
 
     this.setState({
-      history: newHistory,
+      history: [...newHistory, clicked],
       scene: clicked
     })
 
@@ -152,19 +161,19 @@ export default class Graph extends React.Component {
     }
   }
 
-  _handleBack = (next) => {
+  // _handleBack = (next) => {
 
-    let { history, scene } = this.state
+  //   let { history, scene } = this.state
 
-    let newHistory = history.slice(0, history.indexOf(next))
-    let last = history[history.length -1]
+  //   let newHistory = history.slice(0, history.indexOf(next))
+  //   let last = history[history.length -1]
 
-    this.setState({
-      history: newHistory,
-      scene: last
-    })
+  //   this.setState({
+  //     history: newHistory,
+  //     scene: last
+  //   })
 
-  }
+  // }
 
   render(){
 

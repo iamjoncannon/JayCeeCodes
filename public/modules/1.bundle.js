@@ -91,20 +91,30 @@ var Graph = function (_React$Component) {
       } else if (node.label && node.label !== _this.state.scene) {
 
         _this.setState({
-          history: [].concat(_toConsumableArray(_this.state.history), [_this.state.scene]),
+          history: [].concat(_toConsumableArray(_this.state.history), [node.label]),
           scene: node.label
         });
         return;
       } else if (node.text && node.label !== _this.state.scene) {
 
         _this.setState({
-          history: [].concat(_toConsumableArray(_this.state.history), [_this.state.scene]),
+          history: [].concat(_toConsumableArray(_this.state.history), [node.text]),
           scene: node.text
         });
       }
     };
 
     _this._handleHistory = function (clicked) {
+
+      if (clicked === 'joncannon.codes') {
+        _this.setState({
+          history: ['joncannon.codes'],
+          scene: 'back'
+        });
+
+        return;
+      }
+
       var _this$state = _this.state,
           history = _this$state.history,
           scene = _this$state.scene;
@@ -114,7 +124,7 @@ var Graph = function (_React$Component) {
       var selected = history[history.length - 1];
 
       _this.setState({
-        history: newHistory,
+        history: [].concat(_toConsumableArray(newHistory), [clicked]),
         scene: clicked
       });
     };
@@ -145,25 +155,10 @@ var Graph = function (_React$Component) {
       }
     };
 
-    _this._handleBack = function (next) {
-      var _this$state2 = _this.state,
-          history = _this$state2.history,
-          scene = _this$state2.scene;
-
-
-      var newHistory = history.slice(0, history.indexOf(next));
-      var last = history[history.length - 1];
-
-      _this.setState({
-        history: newHistory,
-        scene: last
-      });
-    };
-
     _this.state = {
 
       graphData: _graphdata2.default,
-      history: [],
+      history: ['joncannon.codes'],
       scene: 'back',
       highlighted: null,
       display: 'joncannon.codes'
@@ -210,6 +205,22 @@ var Graph = function (_React$Component) {
     }
   }, {
     key: 'render',
+
+
+    // _handleBack = (next) => {
+
+    //   let { history, scene } = this.state
+
+    //   let newHistory = history.slice(0, history.indexOf(next))
+    //   let last = history[history.length -1]
+
+    //   this.setState({
+    //     history: newHistory,
+    //     scene: last
+    //   })
+
+    // }
+
     value: function render() {
       var _this2 = this;
 
