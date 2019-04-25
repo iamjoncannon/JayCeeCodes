@@ -5,11 +5,19 @@ import { ForceGraph3D } from 'react-force-graph';
 import SpriteText from 'three-spritetext'
 import  graphData  from './graphdata'
 
+const HistoryButton = ({el, id, clicked}) => {
+
+  return (
+    <span onClick={(node)=> clicked(el)} style={{padding: '3px'}}> { id > 0 ? ' > ' + el : el } </span>
+  )
+}
+
 export default class Graph extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
+      
       graphData : graphData,
       history: [],
       scene: 'back',
@@ -100,6 +108,20 @@ export default class Graph extends React.Component {
     }
   }
 
+  _handleHistory = (clicked) => {
+
+    let { history, scene } = this.state
+
+    let newHistory = history.slice(0, history.indexOf(clicked))
+    let selected = history[history.length -1]
+
+    this.setState({
+      history: newHistory,
+      scene: clicked
+    })
+
+  }
+
   _handleHover = (node) => {
 
     if(!node && !this.state.highlighted){
@@ -130,20 +152,23 @@ export default class Graph extends React.Component {
     }
   }
 
-  _handleBack = () => {
+  _handleBack = (next) => {
 
     let { history, scene } = this.state
 
-    let newHistory = history.slice(0, -1)
+    let newHistory = history.slice(0, history.indexOf(next))
     let last = history[history.length -1]
 
     this.setState({
       history: newHistory,
       scene: last
     })
+
   }
 
   render(){
+
+    console.log('history: ', this.state.history, 'scene: ', this.state.scene)
 
     let {screen } = this.props
     let screenType = screen[0]
@@ -154,10 +179,16 @@ export default class Graph extends React.Component {
     scene === 'back'  && screenType === 'mobile' ? viewData = graphData.mobileOpening : '' ;
     !viewData ? viewData = graphData.me : '' ;
 
+        // <img className={ scene !== 'back' && screenType === 'desktop' ? "back" : "back hide" } src='/imgs/back.png' onClick={ this._handleBack } />
+        // <img className={ scene !== 'back' && screenType === 'desktop' ? "home" : "home hide" } src='/imgs/home.png' onClick={ this._handleBack } />        
     return (
 
       <div>
-        <img className={ scene !== 'back' && screenType === 'desktop' ? "back" : "back hide" } src='/imgs/back.png' onClick={ this._handleBack } />
+        <div className={'navbar'}> 
+        
+            <div style={{display: "flex"}}> {this.state.history.map((el, i )=>{return <HistoryButton clicked={(button)=> this._handleHistory(button)} id={i} key={i} el={el}/> })} </div>
+        </div>
+        
         <span className={"display"}> {screenType === 'mobile' ? "joncannon.codes" : this.state.display } </span>
         <div style={{ zIndex: 1 }}>
         <ForceGraph3D

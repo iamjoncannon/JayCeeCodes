@@ -1,8 +1,8 @@
 'use strict'
-
 const express = require('express')
 const path = require('path')
 const app = express()
+console.log(path.join(__dirname, '../public'))
 
 // body parsing middleware
 app.use(express.json())
@@ -10,12 +10,13 @@ app.use(express.urlencoded({ extended: true }))
 
 // static middleware
 app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../public/modules')))
 
 app.use('/api', require('./api')) // include our routes!
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'))
-}) // Send index.html for any other requests
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../index.html'))
+// }) // Send index.html for any other requests
 
 // error handling middleware
 app.use((err, req, res, next) => {

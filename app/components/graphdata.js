@@ -8,7 +8,7 @@ let MusicNode = { id: 'Music', label: 'Music', size: 10, img: 'music-note-2-xxl.
 let ProjectNode = { id: 'Projects', label: 'Projects', img: 'work.png', size: 4 * ratio, display: "Projects"}
 let linkedIn = { id: 'linkedIn', label: 'linkedin', img: 'square-linkedin-512.png', size: 10, addy : "https://www.linkedin.com/in/iamjoncannon/", display: "Linked In"}
 let github = { id: 'github', label: 'github', img: 'github_icon.png', size: 10, addy:"https://github.com/iamjoncannon", display: "Github"}
-let resume = {id: 'resume', label: 'resume', img: 'resume.png', size: 8, addy:'/public/', DL: 'JonathanCannon.pdf', display: "Hire Me"}
+let resume = {id: 'resume', label: 'resume', img: 'resume.png', size: 8, addy:'/public/', DL: '/public/JonathanCannon.pdf', display: "Hire Me"}
 let fullstack = {id: 'fullstack', label: 'fullstack', img: 'fullstack.png', size: 10, addy: 'https://www.fullstackacademy.com/', display: "Fullstack Academy of Code"}
 let UC = {id: 'UC', label: 'UC', img: 'uchicago.png', size: 15, addy: 'https://www.uchicago.edu/', display: "University of Chicago"}
 let bodega = {id: 'bodega', label: 'bodega', img: 'bodega.png', size: 15, addy: 'https://globally.ltd/4', display: "Bodega"}
@@ -108,7 +108,7 @@ const GenieTech = {
 let conceptText = { id: 'conceptText', color: 'black', label: "concept", text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph"}
 let conceptGH = {id: 'conceptGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/iamjoncannon/concept_parser', display: 'Source'}
 let conceptTech = { id: 'conceptTech', color: 'black', label: "ConceptTech", text: 'Technologies', size: 1 * ratio, display: "Technologies Used"}
-let conceptSite = { id: 'conceptSite', color: 'black', text: 'Deployed Site', size: 1 * ratio, display: "http://concept.joncannon.codes", addy: "concept.joncannon.codes"}
+let conceptSite = { id: 'conceptSite', color: 'black', text: 'Deployed Site', size: 1 * ratio, display: "http://concept.joncannon.codes", addy: "http://concept.joncannon.codes"}
 let presentation = { id: 'present', color: 'black', img: 'presentation.png', size: 5 * ratio, display: "Presentation", addy: "https://www.youtube.com/watch?v=sPflAhvZgrU&feature=youtu.be"}
 
 const concept = {

@@ -3,28 +3,50 @@ body {
 	font: 'Sans Serif';
 }
 
-/*display */
+
+.navbar {
+	position: fixed; 
+	z-index: 2;
+	color: white;
+	font-size: 2em;
+	font: Sans Serif;	
+	cursor: default;
+	top: 0vh;
+	left: 0vh;
+}
 
 .display {
 	position: fixed; 
 	z-index: 2;
 	color: black;
-	font: Sans Serif;
-	
+	font: Sans Serif;	
 	background: white;
 	cursor: default;
+	top: 0vh;
+	left: 0vh;
 }
-
-/*back button*/
 
 .back {
 	position: fixed;
 	z-index: 2;
 	color: white; 
 	font: Sans Serif; 
-	top: 0vh;
 	cursor: default;
+	top: 10vh;
+	width: 15vh;
 }
+
+.home {
+	position: fixed;
+	z-index: 2;
+	color: white; 
+	font: Sans Serif; 
+	cursor: default;
+	top: 0vh;
+	height: 15vh;
+}
+
+/*back button*/
 
 .backContainer{
 
@@ -57,6 +79,9 @@ body {
 	}
 	.back:hover {
 		filter: drop-shadow(1px 1px 1px black) invert(50%);
+	}
+	.home:hover {
+		filter: drop-shadow(1px 1px 1px black) invert(20%);
 	}
 
 }
