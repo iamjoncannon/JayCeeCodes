@@ -3,16 +3,15 @@ import './spinnaz.css'
 import Spinner from './refresh-button.svg'
 import SVG from 'react-inlinesvg';
 
-
 const DesktopGraph = React.lazy( () => import('./Graph'))
-
 
 export default class GraphContainer extends React.Component {
  
   constructor(props) {
     super(props);
     this.state = {
-      size: calculateScreen()
+      size: calculateScreen(),
+      loading: true
     }
   }
 
@@ -21,6 +20,10 @@ export default class GraphContainer extends React.Component {
     this.setState({
       size: calculateScreen()
     })
+  }
+
+  loaded = () => {
+    this.state.loading ? this.setState({loading: false}) : '' ;
   }
 
   componentDidMount(){
@@ -36,16 +39,20 @@ export default class GraphContainer extends React.Component {
     return (
       <div >
         <div >
-          <Suspense fallback={<Spinner className='loader'/>}>
-              {this.state.size[1] > 700 ? <DesktopGraph screen={this.state.size}/> : <div> 'nothing loaded: ' + {this.state.size.join(' ')} </div>}
+          
+          <Suspense fallback={ <span> LOADING </span> }>
+            {this.loaded()}
+            {this.state.size[1] > 700 ? <DesktopGraph screen={this.state.size} loading={this.state.loading}/> : <div> 'nothing loaded: ' + {this.state.size.join(' ')} </div>}
+
           </Suspense>
         </div>
       </div>
     );
   }
 }
-              // <DesktopGraph />
-          // <Graph screen={this.state.size}/>
+
+// <Spinner className='loader'/>
+
 
 function calculateScreen(){
 

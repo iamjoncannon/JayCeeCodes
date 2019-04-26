@@ -255,8 +255,13 @@ var GraphContainer = function (_React$Component) {
       });
     };
 
+    _this.loaded = function () {
+      _this.state.loading ? _this.setState({ loading: false }) : '';
+    };
+
     _this.state = {
-      size: calculateScreen()
+      size: calculateScreen(),
+      loading: true
     };
     return _this;
   }
@@ -287,8 +292,13 @@ var GraphContainer = function (_React$Component) {
           null,
           _react2.default.createElement(
             _react.Suspense,
-            { fallback: _react2.default.createElement(_refreshButton2.default, { className: 'loader' }) },
-            this.state.size[1] > 700 ? _react2.default.createElement(DesktopGraph, { screen: this.state.size }) : _react2.default.createElement(
+            { fallback: _react2.default.createElement(
+                'span',
+                null,
+                ' LOADING '
+              ) },
+            this.loaded(),
+            this.state.size[1] > 700 ? _react2.default.createElement(DesktopGraph, { screen: this.state.size, loading: this.state.loading }) : _react2.default.createElement(
               'div',
               null,
               ' \'nothing loaded: \' + ',
@@ -303,8 +313,9 @@ var GraphContainer = function (_React$Component) {
 
   return GraphContainer;
 }(_react2.default.Component);
-// <DesktopGraph />
-// <Graph screen={this.state.size}/>
+
+// <Spinner className='loader'/>
+
 
 exports.default = GraphContainer;
 function calculateScreen() {
