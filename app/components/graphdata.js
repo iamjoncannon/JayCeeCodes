@@ -19,7 +19,7 @@ let bandCamp = {id: 'bandCamp', label: 'bandCamp', img: 'globallyLTD.jpg', size:
 
 // projects 
 let ThisNode = { id: 'this', color: 'black', label: 'thisSite', text: 'this', size: 2 * ratio, display: "This Site"}
-let genieNode = {id: 'genie', label: 'genie', img: 'lamp.png', size: 20, display: "Redux Genie NPM package"}
+let genieNode = {id: 'genie', label: 'genie', img: 'lamp.png', size: 20, display: "Redux Genie"}
 let conceptNode = { id: 'concept', label: 'concept', img: 'hegel.jpg', size: 4 * ratio, display: "Concept Graph Project"}
 
 
@@ -74,7 +74,7 @@ let genieText = { id: 'genietext', color: 'black', text: 'Redux Genie', size: 1.
 let genieGH  = {id: 'genieGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/lovely-libras/redux-genie', display: "Source"}
 let genieSite = {id: 'genieSite', color: 'black', text: 'Docs', size: 1.3 * ratio, addy: 'http://redux-genie.net/docs', display: "Read the Docs"}
 let genieNPM = {id: 'genieNPM', img: 'npm-logo.png', size: 4 * ratio, addy: 'https://www.npmjs.com/package/redux-genie', display: "npm i -g redux-genie"}
-let genieTech = {id: 'GenieTech', color: 'black', label: "GenieTech", text: "Technologies", size: 1.3 * ratio, display: "Technologies Used"}
+let genieTech = {id: 'GenieTech', color: 'black', label: "GenieTech", text: "Technologies", size: 1.3 * ratio, display: "Redux Genie Technologies"}
 
 
 const genie = {
@@ -105,9 +105,9 @@ const GenieTech = {
 }
 
 // concept
-let conceptText = { id: 'conceptText', color: 'black', label: "concept", text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph"}
+let conceptText = { id: 'conceptText', color: 'black', label: "concept", text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph", addy: "http://concept.joncannon.codes"}
 let conceptGH = {id: 'conceptGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/iamjoncannon/concept_parser', display: 'Source'}
-let conceptTech = { id: 'conceptTech', color: 'black', label: "ConceptTech", text: 'Technologies', size: 1 * ratio, display: "Technologies Used"}
+let conceptTech = { id: 'conceptTech', color: 'black', label: "ConceptTech", text: 'Technologies', size: 1 * ratio, display: "Concept Graph Technologies"}
 let conceptSite = { id: 'conceptSite', color: 'black', text: 'Deployed Site', size: 1 * ratio, display: "http://concept.joncannon.codes", addy: "http://concept.joncannon.codes"}
 let presentation = { id: 'present', color: 'black', img: 'presentation.png', size: 5 * ratio, display: "Presentation", addy: "https://www.youtube.com/watch?v=sPflAhvZgrU&feature=youtu.be"}
 

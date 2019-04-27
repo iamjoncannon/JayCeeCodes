@@ -36,30 +36,11 @@ var _graphdata2 = _interopRequireDefault(_graphdata);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var HistoryButton = function HistoryButton(_ref) {
-  var el = _ref.el,
-      id = _ref.id,
-      clicked = _ref.clicked;
-
-
-  return _react2.default.createElement(
-    'span',
-    { onClick: function onClick(node) {
-        return clicked(el);
-      }, style: { padding: '3px' } },
-    ' ',
-    id > 0 ? ' > ' + el : el,
-    ' '
-  );
-};
 
 var Graph = function (_React$Component) {
   _inherits(Graph, _React$Component);
@@ -77,7 +58,6 @@ var Graph = function (_React$Component) {
         link.download = node.DL;
         link.href = node.DL;
         link.preventDefault = true;
-        console.log(link);
         document.body.appendChild(link);
         link.click().preventDefault();
         document.body.removeChild(link);
@@ -88,45 +68,15 @@ var Graph = function (_React$Component) {
         window.open(node.addy, '_blank');
 
         return;
-      } else if (node.label && node.label !== _this.state.scene) {
+      } else if (node.label && node.label !== _this.props.scene) {
 
-        _this.setState({
-          history: [].concat(_toConsumableArray(_this.state.history), [node.label]),
-          scene: node.label
-        });
-        return;
-      } else if (node.text && node.label !== _this.state.scene) {
-
-        _this.setState({
-          history: [].concat(_toConsumableArray(_this.state.history), [node.text]),
-          scene: node.text
-        });
-      }
-    };
-
-    _this._handleHistory = function (clicked) {
-
-      if (clicked === 'joncannon.codes') {
-        _this.setState({
-          history: ['joncannon.codes'],
-          scene: 'back'
-        });
+        _this.props.setHistory(node);
 
         return;
+      } else if (node.text && node.label !== _this.props.scene) {
+
+        _this.props.setHistory(node);
       }
-
-      var _this$state = _this.state,
-          history = _this$state.history,
-          scene = _this$state.scene;
-
-
-      var newHistory = history.slice(0, history.indexOf(clicked));
-      var selected = history[history.length - 1];
-
-      _this.setState({
-        history: [].concat(_toConsumableArray(newHistory), [clicked]),
-        scene: clicked
-      });
     };
 
     _this._handleHover = function (node) {
@@ -134,17 +84,17 @@ var Graph = function (_React$Component) {
       if (!node && !_this.state.highlighted) {
 
         var nextState = _this.state.scene === 'back' ? { highlighted: null, display: 'joncannon.codes' } : { highlighted: null, display: null };
-
+        _this.props.lighted(null);
         _this.setState(nextState);
       } else if (!node && _this.state.highlighted) {
         // null and something is highlighted
         var _nextState = _this.state.scene === 'back' ? { highlighted: null, display: 'joncannon.codes' } : { highlighted: null, display: null };
-
+        _this.props.lighted(null);
         _this.setState(_nextState);
       } else if (node && node.id !== _this.state.highlighted) {
 
         if (_this.props.screen[0] === 'desktop') {
-
+          _this.props.lighted(true);
           _this.setState({ highlighted: node.id, display: node.display });
         } else if (node && _this.props.screen[0] === 'mobile') {
           // hover equals click on mobile
@@ -156,10 +106,7 @@ var Graph = function (_React$Component) {
     };
 
     _this.state = {
-
       graphData: _graphdata2.default,
-      history: ['joncannon.codes'],
-      scene: 'back',
       highlighted: null,
       display: 'joncannon.codes'
     };
@@ -194,7 +141,7 @@ var Graph = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-
+      this.props.loaded();
       this.resize();
     }
   }, {
@@ -205,34 +152,18 @@ var Graph = function (_React$Component) {
     }
   }, {
     key: 'render',
-
-
-    // _handleBack = (next) => {
-
-    //   let { history, scene } = this.state
-
-    //   let newHistory = history.slice(0, history.indexOf(next))
-    //   let last = history[history.length -1]
-
-    //   this.setState({
-    //     history: newHistory,
-    //     scene: last
-    //   })
-
-    // }
-
     value: function render() {
       var _this2 = this;
-
-      console.log('history: ', this.state.history, 'scene: ', this.state.scene);
 
       var screen = this.props.screen;
 
       var screenType = screen[0];
       var graphData = this.state.graphData;
-      var scene = this.state.scene;
+      var scene = this.props.scene;
+      // let viewData = graphData[`${scene}`]
 
-      var viewData = graphData['' + scene];
+      var viewData = graphData['' + viewMapper(scene)];
+
       scene === 'back' && screenType === 'desktop' ? viewData = graphData.DeskOpening : scene === 'back' && screenType === 'mobile' ? viewData = graphData.mobileOpening : '';
       !viewData ? viewData = graphData.me : '';
 
@@ -242,25 +173,10 @@ var Graph = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(
-          'div',
-          { className: 'navbar' },
-          _react2.default.createElement(
-            'div',
-            { style: { display: "flex" } },
-            ' ',
-            this.state.history.map(function (el, i) {
-              return _react2.default.createElement(HistoryButton, { clicked: function clicked(button) {
-                  return _this2._handleHistory(button);
-                }, id: i, key: i, el: el });
-            }),
-            ' '
-          )
-        ),
-        _react2.default.createElement(
           'span',
           { className: "display" },
           ' ',
-          screenType === 'mobile' ? "joncannon.codes" : this.state.display,
+          this.state.display,
           ' '
         ),
         _react2.default.createElement(
@@ -314,6 +230,17 @@ var Graph = function (_React$Component) {
 
 exports.default = Graph;
 
+
+function viewMapper(scene) {
+  var returnVal = void 0;
+
+  scene === "Hegel's Science of Logic as a graph" ? scene = "Concept Graph Project" : '';
+
+  scene === "Concept Graph Project" ? returnVal = 'concept' : scene === 'This Site' ? returnVal = 'thisSite' : scene === "Concept Graph Technologies" ? returnVal = 'ConceptTech' : scene === 'Redux Genie' ? returnVal = 'genie' : scene === "Redux Genie Technologies" ? returnVal = 'GenieTech' : scene === "Tunes" ? returnVal = "Music" : returnVal = scene;
+
+  return returnVal;
+}
+
 /***/ }),
 
 /***/ "./app/components/graphdata.js":
@@ -351,7 +278,7 @@ var bandCamp = { id: 'bandCamp', label: 'bandCamp', img: 'globallyLTD.jpg', size
 
 	// projects 
 };var ThisNode = { id: 'this', color: 'black', label: 'thisSite', text: 'this', size: 2 * ratio, display: "This Site" };
-var genieNode = { id: 'genie', label: 'genie', img: 'lamp.png', size: 20, display: "Redux Genie NPM package" };
+var genieNode = { id: 'genie', label: 'genie', img: 'lamp.png', size: 20, display: "Redux Genie" };
 var conceptNode = { id: 'concept', label: 'concept', img: 'hegel.jpg', size: 4 * ratio, display: "Concept Graph Project" };
 
 var DeskOpening = {
@@ -383,7 +310,7 @@ var Projects = {
 var genieGH = { id: 'genieGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/lovely-libras/redux-genie', display: "Source" };
 var genieSite = { id: 'genieSite', color: 'black', text: 'Docs', size: 1.3 * ratio, addy: 'http://redux-genie.net/docs', display: "Read the Docs" };
 var genieNPM = { id: 'genieNPM', img: 'npm-logo.png', size: 4 * ratio, addy: 'https://www.npmjs.com/package/redux-genie', display: "npm i -g redux-genie" };
-var genieTech = { id: 'GenieTech', color: 'black', label: "GenieTech", text: "Technologies", size: 1.3 * ratio, display: "Technologies Used" };
+var genieTech = { id: 'GenieTech', color: 'black', label: "GenieTech", text: "Technologies", size: 1.3 * ratio, display: "Redux Genie Technologies" };
 
 var genie = {
 	nodes: [genieNode, genieText, genieSite, genieGH, genieNPM, genieTech],
@@ -402,9 +329,9 @@ var Mocha = { id: 'Mocha', img: 'mocha.svg', size: 4 * ratio, display: "Mocha/Ch
 	links: [{ source: 'genie', target: 'nodeJS' }, { source: 'genie', target: 'Bash' }, { source: 'genie', target: 'Redux' }, { source: 'genieNPM', target: 'genie' }, { source: 'Mocha', target: 'genie' }]
 
 	// concept
-};var conceptText = { id: 'conceptText', color: 'black', label: "concept", text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph" };
+};var conceptText = { id: 'conceptText', color: 'black', label: "concept", text: 'Concept Graph', size: 1 * ratio, display: "Hegel's Science of Logic as a graph", addy: "http://concept.joncannon.codes" };
 var conceptGH = { id: 'conceptGH', img: 'github_icon.png', size: 10, addy: 'https://github.com/iamjoncannon/concept_parser', display: 'Source' };
-var conceptTech = { id: 'conceptTech', color: 'black', label: "ConceptTech", text: 'Technologies', size: 1 * ratio, display: "Technologies Used" };
+var conceptTech = { id: 'conceptTech', color: 'black', label: "ConceptTech", text: 'Technologies', size: 1 * ratio, display: "Concept Graph Technologies" };
 var conceptSite = { id: 'conceptSite', color: 'black', text: 'Deployed Site', size: 1 * ratio, display: "http://concept.joncannon.codes", addy: "http://concept.joncannon.codes" };
 var presentation = { id: 'present', color: 'black', img: 'presentation.png', size: 5 * ratio, display: "Presentation", addy: "https://www.youtube.com/watch?v=sPflAhvZgrU&feature=youtu.be" };
 

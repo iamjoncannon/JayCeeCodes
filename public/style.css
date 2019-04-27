@@ -1,5 +1,5 @@
 body {
-	/*background: black;*/
+	background: black;
 	font: 'Sans Serif';
 }
 
@@ -8,7 +8,6 @@ body {
 	position: fixed; 
 	z-index: 2;
 	color: white;
-	font-size: 2em;
 	font: Sans Serif;	
 	cursor: default;
 	top: 0vh;
@@ -46,7 +45,23 @@ body {
 	height: 15vh;
 }
 
-/*back button*/
+.navbuttons {
+	color: white;
+}
+
+.big {
+	font-size: 3em;
+}
+
+.small {
+	font-size: 2em;
+}
+
+.navbuttons:hover {
+	/*filter: drop-shadow(1px 1px 1px red) invert(50%);*/
+	color: black;
+	background: white;
+}
 
 .backContainer{
 
@@ -57,6 +72,19 @@ body {
 	visibility: hidden;
 }
 
+
+/*@media (min-width: 1101px){
+	.navbuttons {
+		font-size: 2em;
+	}
+}
+
+@media (max-width: 1100px){
+	.navbuttons {
+		font-size: 1.5em;
+	}
+}
+*/
 @media (max-width: 700px){
 
 	.display {

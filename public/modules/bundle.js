@@ -230,15 +230,43 @@ var _reactInlinesvg2 = _interopRequireDefault(_reactInlinesvg);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var DesktopGraph = _react2.default.lazy(function () {
+var Graph = calculateScreen()[0] === 'desktop' ? _react2.default.lazy(function () {
   return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! ./Graph */ "./app/components/Graph.js", 7));
+}) : _react2.default.lazy(function () {
+  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.t.bind(null, /*! ./mobileGraph */ "./app/components/mobileGraph.js", 7));
 });
+
+var HistoryButton = function HistoryButton(_ref) {
+  var el = _ref.el,
+      id = _ref.id,
+      clicked = _ref.clicked,
+      hov = _ref.hov,
+      classname = _ref.classname;
+
+
+  calculateScreen()[1] < 1200 ? classname = 'navbuttons small' : '';
+
+  return _react2.default.createElement(
+    'span',
+    { className: classname,
+      onClick: function onClick(node) {
+        return clicked(el);
+      },
+      style: { padding: '3px' },
+      onMouseOver: function onMouseOver() {
+        return hov(el);
+      } },
+    id > 0 ? ' < ' + el : el
+  );
+};
 
 var GraphContainer = function (_React$Component) {
   _inherits(GraphContainer, _React$Component);
@@ -256,12 +284,55 @@ var GraphContainer = function (_React$Component) {
     };
 
     _this.loaded = function () {
-      _this.state.loading ? _this.setState({ loading: false }) : '';
+      _this.state.loading ? _this.setState({ history: ['joncannon.codes'], loading: false }) : '';
+    };
+
+    _this.setHistory = function (node) {
+
+      var update = node.display;
+
+      if (_this.state.history.includes(update)) return;
+
+      _this.setState({
+        history: [].concat(_toConsumableArray(_this.state.history), [update]),
+        scene: update
+      });
+    };
+
+    _this._handleHistory = function (clicked) {
+
+      if (clicked === 'joncannon.codes') {
+        _this.setState({
+          history: ['joncannon.codes'],
+          scene: 'back'
+        });
+
+        return;
+      }
+
+      var _this$state = _this.state,
+          history = _this$state.history,
+          scene = _this$state.scene;
+
+
+      var newHistory = history.slice(0, history.indexOf(clicked));
+      var selected = history[history.length - 1];
+
+      _this.setState({
+        history: [].concat(_toConsumableArray(newHistory), [clicked]),
+        scene: clicked
+      });
+    };
+
+    _this.lighted = function (value) {
+      _this.setState({ lighted: value });
     };
 
     _this.state = {
       size: calculateScreen(),
-      loading: true
+      history: ['joncannon.codes', '...LOADING '],
+      loading: true,
+      scene: 'back'
     };
     return _this;
   }
@@ -271,40 +342,55 @@ var GraphContainer = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      this.resize();
       window.addEventListener("resize", function () {
         _this2.resize();
       });
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // window.removeEventListener("resize");
-    }
-  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
 
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'div',
+          { className: 'navbar' },
+          _react2.default.createElement(
+            'div',
+            { className: this.state.size[0] === 'mobile' ? 'hide' : '' },
+            !this.state.lighted ? this.state.history.map(function (el, i) {
+              return _react2.default.createElement(HistoryButton, { clicked: function clicked(button) {
+                  return _this3._handleHistory(button);
+                }
+                // style={{fontSize: '300px'}}
+                , id: i,
+                key: i,
+                el: el,
+                classname: _this3.state.history.length > 3 ? "navbuttons small" : "navbuttons big"
+
+              });
+            }) : ''
+          )
+        ),
+        _react2.default.createElement(
+          'div',
           null,
           _react2.default.createElement(
             _react.Suspense,
-            { fallback: _react2.default.createElement(
-                'span',
-                null,
-                ' LOADING '
-              ) },
-            this.loaded(),
-            this.state.size[1] > 700 ? _react2.default.createElement(DesktopGraph, { screen: this.state.size, loading: this.state.loading }) : _react2.default.createElement(
-              'div',
-              null,
-              ' \'nothing loaded: \' + ',
-              this.state.size.join(' '),
-              ' '
-            )
+            { fallback: null },
+            _react2.default.createElement(Graph, { setHistory: function setHistory(node) {
+                return _this3.setHistory(node);
+              },
+              history: this.state.history,
+              screen: this.state.size,
+              loading: this.state.loading,
+              scene: this.state.scene,
+              loaded: this.loaded,
+              lighted: this.lighted
+            })
           )
         )
       );
@@ -314,10 +400,9 @@ var GraphContainer = function (_React$Component) {
   return GraphContainer;
 }(_react2.default.Component);
 
-// <Spinner className='loader'/>
-
-
 exports.default = GraphContainer;
+
+
 function calculateScreen() {
   var _window = window,
       outerWidth = _window.outerWidth,
@@ -11472,7 +11557,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".loader {\n    position: absolute;\n    /*top: 50%;*/\n    left: 50vh;\n    /*width: 120px;*/\n    /*height: 120px;*/\n    /*margin:-60px 0 0 -60px;*/\n    /*-webkit-animation:spin 4s linear infinite;*/\n    /*-moz-animation:spin 4s linear infinite;*/\n    animation-name: spin;\n\tanimation-duration: 1000ms;\n\tanimation-iteration-count: infinite;\n\tanimation-timing-function: linear;\n}\n\n\n@keyframes spin {\n    from {\n        transform:rotate(0deg);\n    }\n    to {\n        transform:rotate(-360deg);\n    }\n}\n\nsvg {\n  -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */\n          filter: invert(100%);\n}", ""]);
+exports.push([module.i, ".loader {\n    position: absolute;\n    /*top: 50%;*/\n    left: 50vh;\n    /*width: 120px;*/\n    /*height: 120px;*/\n    /*margin:-60px 0 0 -60px;*/\n    /*-webkit-animation:spin 4s linear infinite;*/\n    /*-moz-animation:spin 4s linear infinite;*/\n    color: white;\n    animation-name: spin;\n\tanimation-duration: 1000ms;\n\tanimation-iteration-count: infinite;\n\tanimation-timing-function: linear;\n}\n\n\n@keyframes spin {\n    from {\n        transform:rotate(0deg);\n    }\n    to {\n        transform:rotate(-360deg);\n    }\n}\n\nsvg {\n  -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */\n          filter: invert(100%);\n}", ""]);
 
 // exports
 

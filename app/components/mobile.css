@@ -1,0 +1,36 @@
+
+#mobileContainer {
+
+	display: flex;
+	flex-direction: column;
+}
+
+#iconContainer {
+	align-self: center;
+	display: flex;
+	flex-direction: row;
+	left: 50%;
+	justify-content: space-between;
+	margin-bottom: 2vh;
+}
+
+.mobileText {
+	font-size: 8em;
+	margin: 3vh;
+	align-self: center;
+
+}
+
+.icons {
+	align-self: center;
+	height: 8vh;
+	margin-left: 8vh;
+
+}
+
+.images {
+	align-self: center;
+	margin: 3vh;
+	height: 20vh;
+	/*flex-basis: content;*/
+}

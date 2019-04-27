@@ -5,22 +5,12 @@ import { ForceGraph3D } from 'react-force-graph';
 import SpriteText from 'three-spritetext'
 import  graphData  from './graphdata'
 
-const HistoryButton = ({el, id, clicked}) => {
-
-  return (
-    <span onClick={(node)=> clicked(el)} style={{padding: '3px'}}> { id > 0 ? ' > ' + el : el } </span>
-  )
-}
-
 export default class Graph extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
-      
       graphData : graphData,
-      history: ['joncannon.codes'],
-      scene: 'back',
       highlighted: null,
       display: 'joncannon.codes'
     }
@@ -60,7 +50,7 @@ export default class Graph extends React.Component {
   }
 
   componentDidMount(){
-    
+    this.props.loaded()
     this.resize()
   }
 
@@ -77,11 +67,9 @@ export default class Graph extends React.Component {
         link.download = node.DL;
         link.href = node.DL;
         link.preventDefault = true
-        console.log(link)
         document.body.appendChild(link);
         link.click().preventDefault();
         document.body.removeChild(link);
-
     }
 
     if(node.addy){
@@ -90,45 +78,17 @@ export default class Graph extends React.Component {
 
       return
     }
-    else if(node.label && node.label !== this.state.scene){
+    else if(node.label && node.label !== this.props.scene){
 
-      this.setState({
-        history : [...this.state.history, node.label],
-        scene : node.label
-      })
-      return
-    }
-
-    else if(node.text && node.label !== this.state.scene){
-
-      this.setState({
-        history : [...this.state.history, node.text],
-        scene : node.text
-      })
-    }
-  }
-
-  _handleHistory = (clicked) => {
-
-    if(clicked === 'joncannon.codes'){
-      this.setState({
-        history: ['joncannon.codes'],
-        scene: 'back'
-      })
+      this.props.setHistory(node)
 
       return
     }
 
-    let { history, scene } = this.state
+    else if(node.text && node.label !== this.props.scene){
 
-    let newHistory = history.slice(0, history.indexOf(clicked))
-    let selected = history[history.length -1]
-
-    this.setState({
-      history: [...newHistory, clicked],
-      scene: clicked
-    })
-
+      this.props.setHistory(node)
+    }
   }
 
   _handleHover = (node) => {
@@ -136,19 +96,19 @@ export default class Graph extends React.Component {
     if(!node && !this.state.highlighted){
 
       let nextState = this.state.scene === 'back' ? {highlighted : null, display: 'joncannon.codes'} : {highlighted : null, display: null}
-
+      this.props.lighted(null)
       this.setState(nextState)
     }
     else if(!node && this.state.highlighted){
     // null and something is highlighted
       let nextState = this.state.scene === 'back' ? {highlighted : null, display: 'joncannon.codes'} : {highlighted : null, display: null}
-
+      this.props.lighted(null)
       this.setState(nextState)
     }
     else if(node && node.id !== this.state.highlighted){
 
       if(this.props.screen[0] === 'desktop'){
-
+        this.props.lighted(true)
         this.setState({highlighted : node.id, display: node.display })
       }
       else if(node && this.props.screen[0] === 'mobile'){
@@ -161,29 +121,15 @@ export default class Graph extends React.Component {
     }
   }
 
-  // _handleBack = (next) => {
-
-  //   let { history, scene } = this.state
-
-  //   let newHistory = history.slice(0, history.indexOf(next))
-  //   let last = history[history.length -1]
-
-  //   this.setState({
-  //     history: newHistory,
-  //     scene: last
-  //   })
-
-  // }
-
   render(){
-
-    console.log('history: ', this.state.history, 'scene: ', this.state.scene)
 
     let {screen } = this.props
     let screenType = screen[0]
     let {graphData} = this.state
-    let { scene } = this.state 
-    let viewData = graphData[`${scene}`]
+    let { scene } = this.props 
+    // let viewData = graphData[`${scene}`]
+    let viewData = graphData[`${viewMapper(scene)}`]
+
     scene === 'back'  && screenType === 'desktop' ? viewData = graphData.DeskOpening : 
     scene === 'back'  && screenType === 'mobile' ? viewData = graphData.mobileOpening : '' ;
     !viewData ? viewData = graphData.me : '' ;
@@ -193,12 +139,9 @@ export default class Graph extends React.Component {
     return (
 
       <div>
-        <div className={'navbar'}> 
         
-            <div style={{display: "flex"}}> {this.state.history.map((el, i )=>{return <HistoryButton clicked={(button)=> this._handleHistory(button)} id={i} key={i} el={el}/> })} </div>
-        </div>
         
-        <span className={"display"}> {screenType === 'mobile' ? "joncannon.codes" : this.state.display } </span>
+        <span className={"display"}> { this.state.display } </span>
         <div style={{ zIndex: 1 }}>
         <ForceGraph3D
           height={screen[2]}
@@ -242,4 +185,18 @@ export default class Graph extends React.Component {
   }
 }
 
+function viewMapper(scene){
+  let returnVal
+  
+  scene === "Hegel's Science of Logic as a graph" ? scene = "Concept Graph Project" : '' ;
 
+  scene === "Concept Graph Project" ? returnVal = 'concept' : 
+  scene === 'This Site' ? returnVal = 'thisSite' :
+  scene === "Concept Graph Technologies" ? returnVal = 'ConceptTech' :
+  scene === 'Redux Genie' ? returnVal = 'genie' :
+  scene === "Redux Genie Technologies" ? returnVal = 'GenieTech' :
+  scene === "Tunes" ? returnVal = "Music" :
+  returnVal = scene ;
+
+  return returnVal
+}
