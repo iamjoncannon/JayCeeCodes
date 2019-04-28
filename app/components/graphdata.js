@@ -15,15 +15,10 @@ let bodega = {id: 'bodega', label: 'bodega', img: 'bodega.png', size: 15, addy: 
 let soundcloud = {id: 'soundcloud', label: 'soundcloud', img: 'soundcloud-icon.png', size: 15, addy: 'https://soundcloud.com/bodegachill', display: "My SoundCloud"}
 let bandCamp = {id: 'bandCamp', label: 'bandCamp', img: 'globallyLTD.jpg', size: 15, addy: 'https://gltd.bandcamp.com/album/ep-1', display: "Buy my Tunes"}
 
-
-
 // projects 
 let ThisNode = { id: 'this', color: 'black', label: 'thisSite', text: 'this', size: 2 * ratio, display: "This Site"}
 let genieNode = {id: 'genie', label: 'genie', img: 'lamp.png', size: 20, display: "Redux Genie"}
 let conceptNode = { id: 'concept', label: 'concept', img: 'hegel.jpg', size: 4 * ratio, display: "Concept Graph Project"}
-
-
-
 
 const DeskOpening = {
   nodes: [ CodeNode, MeNode, MusicNode, ProjectNode ],
@@ -44,10 +39,10 @@ const Code = {
 }
 
 const me = {
-	nodes : [ {...MeNode, size: 5 * ratio}, resume, fullstack, ProjectNode, UC ],
+	nodes : [ {...MeNode, size: 5 * ratio}, resume, ProjectNode, UC ],
 	links: [
 			{source : 'me', target: 'resume'},			
-			{source : 'fullstack', target: 'me'},
+			// {source : 'fullstack', target: 'me'},
 			{source: 'Projects', target: 'me'},
 			{source: 'UC', target: 'me'}
 			]

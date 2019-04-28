@@ -292,8 +292,10 @@ var Code = {
 };
 
 var me = {
-	nodes: [_extends({}, MeNode, { size: 5 * ratio }), resume, fullstack, ProjectNode, UC],
-	links: [{ source: 'me', target: 'resume' }, { source: 'fullstack', target: 'me' }, { source: 'Projects', target: 'me' }, { source: 'UC', target: 'me' }]
+	nodes: [_extends({}, MeNode, { size: 5 * ratio }), resume, ProjectNode, UC],
+	links: [{ source: 'me', target: 'resume' },
+	// {source : 'fullstack', target: 'me'},
+	{ source: 'Projects', target: 'me' }, { source: 'UC', target: 'me' }]
 };
 
 var Music = {
