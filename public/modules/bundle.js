@@ -239,9 +239,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Graph = calculateScreen()[0] === 'desktop' ? _react2.default.lazy(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! ./Graph */ "./app/components/Graph.js", 7));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.t.bind(null, /*! ./Graph */ "./app/components/Graph.js", 7));
 }) : _react2.default.lazy(function () {
-  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.t.bind(null, /*! ./mobileGraph */ "./app/components/mobileGraph.js", 7));
+  return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.t.bind(null, /*! ./mobileGraph */ "./app/components/mobileGraph.js", 7));
 });
 
 var HistoryButton = function HistoryButton(_ref) {

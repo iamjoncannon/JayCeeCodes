@@ -12,6 +12,7 @@
 	left: 50%;
 	justify-content: space-between;
 	margin-bottom: 2vh;
+	margin-right: 8vh;
 }
 
 .mobileText {
@@ -33,4 +34,21 @@
 	margin: 3vh;
 	height: 20vh;
 	/*flex-basis: content;*/
+}
+
+.lower {
+	display: flex;
+	flex-direction: row;
+	align-self: center;
+	/*margin-left: 3vh;*/
+}
+
+#home {
+	display: flex;
+	flex-direction: column;
+}
+
+#work {
+	display: flex;
+	align-self: center
 }

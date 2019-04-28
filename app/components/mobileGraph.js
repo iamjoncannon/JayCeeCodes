@@ -16,19 +16,57 @@ export default class mobileGraph extends React.Component {
 
   render() {
 
+    const { scene } = this.state
+
     return (
       <div id={'mobileContainer'}>
-        <span className={'navbuttons mobileText'}> joncannon.codes </span>
 
-        <div id={'iconContainer'}>
-          <img className={'icons'} src='imgs/square-linkedin-512.png' />
-          <img className={'icons'} src='imgs/github_icon.png' />
-          <img className={'icons'} src='imgs/resume.png' />
-        </div>
+          <span className={'navbuttons mobileText'} onClick={()=> this.setState({scene: 'home'})}> joncannon.codes </span>
 
-        <img className={'images'} src='imgs/work.png' />
-        <img className={'images'} src='imgs/music-note-2-xxl.png' />
-      
+
+          {scene === 'home' ? 
+
+          <div id={'home'}>
+            <div id={'iconContainer'}>
+              <a href={'https://www.linkedin.com/in/iamjoncannon/'}>
+                <img className={'icons'} src='imgs/square-linkedin-512.png' />
+              </a>
+              <a href={'https://github.com/iamjoncannon'}>
+                <img className={'icons'} src='imgs/github_icon.png' />
+              </a>
+              <a href={'JonathanCannon.pdf'} download>
+                <img className={'icons'} src='imgs/resume.png' />
+              </a>
+            
+            </div>
+
+            <div className={'lower'}>
+              
+              <img className={'images'} src='imgs/work.png' onClick={()=> this.setState({scene: 'work'})} />
+              
+              <a href={'https://gltd.bandcamp.com/album/ep-1'}>
+                <img className={'images'} src='imgs/music-note-2-xxl.png' />
+              </a>
+            
+            </div>
+
+          </div>
+
+          : scene === 'work' ? 
+
+          <div id={'work'}>
+              <a href={'http://redux-genie.net'} >
+                <img className={'images'} src='imgs/lamp.png'/>
+              </a>
+
+              <a href={'http://concept.joncannon.codes'}>
+                <img className={'images'} src='imgs/hegel.jpg'/>
+              </a>
+          </div>
+          : ''
+
+        }
+
       </div>
     );
   }
