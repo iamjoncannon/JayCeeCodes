@@ -29,23 +29,23 @@ export default class mobileGraph extends React.Component {
           <div id={'home'}>
             <div id={'iconContainer'}>
               <a href={'https://www.linkedin.com/in/iamjoncannon/'}>
-                <img className={'icons'} src='imgs/square-linkedin-512.png' />
+                <img className={'icons'} src='public/imgs/square-linkedin-512.png' />
               </a>
               <a href={'https://github.com/iamjoncannon'}>
-                <img className={'icons'} src='imgs/github_icon.png' />
+                <img className={'icons'} src='public/imgs/github_icon.png' />
               </a>
-              <a href={'JonathanCannon.pdf'} download>
-                <img className={'icons'} src='imgs/resume.png' />
+              <a href={'public/JonathanCannon.pdf'} download>
+                <img className={'icons'} src='public/imgs/resume.png' />
               </a>
             
             </div>
 
             <div className={'lower'}>
               
-              <img className={'images'} src='imgs/work.png' onClick={()=> this.setState({scene: 'work'})} />
+              <img className={'images'} src='public/imgs/work.png' onClick={()=> this.setState({scene: 'work'})} />
               
               <a href={'https://gltd.bandcamp.com/album/ep-1'}>
-                <img className={'images'} src='imgs/music-note-2-xxl.png' />
+                <img className={'images'} src='public/imgs/music-note-2-xxl.png' />
               </a>
             
             </div>
@@ -56,11 +56,11 @@ export default class mobileGraph extends React.Component {
 
           <div id={'work'}>
               <a href={'http://redux-genie.net'} >
-                <img className={'images'} src='imgs/lamp.png'/>
+                <img className={'images'} src='public/imgs/lamp.png'/>
               </a>
 
               <a href={'http://concept.joncannon.codes'}>
-                <img className={'images'} src='imgs/hegel.jpg'/>
+                <img className={'images'} src='public/imgs/hegel.jpg'/>
               </a>
           </div>
           : ''

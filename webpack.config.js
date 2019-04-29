@@ -6,7 +6,7 @@ module.exports = {
   ],
   entry: ['babel-polyfill', './app/main'],
   output: {
-    path: resolve(__dirname, './public'),
+    path: resolve(__dirname, './'),
     filename: './modules/bundle.js'
   },
   mode: process.env.webpack,

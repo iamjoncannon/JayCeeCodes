@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { ForceGraph3D } from 'react-force-graph';
 import SpriteText from 'three-spritetext'
-import  graphData  from './graphdata'
+import graphData from './graphdata'
 
 export default class Graph extends React.Component {
 
@@ -157,7 +157,7 @@ export default class Graph extends React.Component {
               if(node.img){
                 let size = node.size
                 node.id === this.state.highlighted ? size += 8 : '' ;
-                const imgTexture = new THREE.TextureLoader().load(`./imgs/${node.img}`);
+                const imgTexture = new THREE.TextureLoader().load(`./public/imgs/${node.img}`);
                 const material = new THREE.SpriteMaterial({ map: imgTexture });
                 const sprite = new THREE.Sprite(material);
                 sprite.scale.set(size, size);
